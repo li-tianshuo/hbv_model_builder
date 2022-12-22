@@ -51,11 +51,11 @@ There are 5 part in building a hbv model. The flow chart of core component of im
 
 #### Snowmelt and Accumulation
 
-The snow melt and accumulation is rely on the threshold temperature in that area. And the equation for calculate the snowmelt rate($mm/day$) is shown in equation below:
+The snow melt and accumulation is rely on the threshold temperature in that area. And the equation for calculate the snowmelt rate( $mm/day$ ) is shown in equation below:
 
 $S_m(t)=DDF(T(t)-T_tr)$
 
-DDF is the degree-day factor($mm/(^\circ C*day)$) and t is daily mean temperature.
+DDF is the degree-day factor( $mm/(^\circ C*day)$ ) and t is daily mean temperature.
 
 #### Effective Precipitation
 
@@ -399,6 +399,7 @@ Parameters file should be txt file or in the same format. It should have 19 line
 |  17 | column position of T   |
 |  18 | column position of P   |
 |  19 | column position of Q   |
+
 Example file "parameters.txt" can be good example as a reference.
 
 ## Example Output
