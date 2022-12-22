@@ -1,0 +1,42 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "Build for debugging",
+            "command": "D:/mingw64/bin/g++.exe",
+            "args": [
+                "${workspaceFolder}/*.cpp",
+                "-o",
+                "${workspaceFolder}/hbv.exe",
+                "-Wall",
+                "-Wextra",
+                "-Wconversion",
+                "-Wsign-conversion",
+                "-Wshadow",
+                "-Wpedantic",
+                "-std=c++20",
+                "-ggdb3"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Compile all .cpp files with warning and debugging flags",
+            "presentation": {
+                "clear": true,
+                "echo": true,
+                "focus": false,
+                "panel": "shared",
+                "reveal": "silent",
+                "showReuseMessage": true
+            }
+        }
+    ]
+}
