@@ -34,7 +34,6 @@
     - [Parameter File](#parameter-file)
   - [Example Output](#example-output)
 
-
 ## Introduction
 
 ### Overview
@@ -53,7 +52,9 @@ There are 5 part in building a hbv model. The flow chart of core component of im
 
 The snow melt and accumulation is rely on the threshold temperature in that area. And the equation for calculate the snowmelt rate( $mm/day$ ) is shown in equation below:
 
-$S_m(t)=DDF(T(t)-T_tr)$
+$$
+S_m(t)=DDF(T(t)-T_tr)
+$$
 
 DDF is the degree-day factor( $mm/(^\circ C*day)$ ) and t is daily mean temperature.
 
@@ -62,19 +63,25 @@ DDF is the degree-day factor( $mm/(^\circ C*day)$ ) and t is daily mean temperat
 With the snow melt rate, we can determine the effective precipitation. The precipitation can be rain or snow, and we can use threshold temperature to determine the snow or rain. If that's snow, use snowmelt rate to determine actual snow rate. If not, we can determine effective precipitation.
 The equation of water flux(F) to ground water is shown as equation below:
 
-$F(t)=\frac{SM(t-1)}{FC}^\beta (P(t)+ASM(t))$
+$$
+F(t)=\frac{SM(t-1)}{FC}^\beta (P(t)+ASM(t))
+$$
 
  SM is actual soil moisture(mm), FC is field capacity(mm), ASM is the actual snow melt(mm) in that day and $\beta$ is a parameters that limit water to ground water recharge.
 
 #### Evapotranspiration
 
-Actual Evapotranspiration(ACT) is based on potential evapotranspiration($ET_0$). $ET_0$ can be calculated as equation below:
+Actual Evapotranspiration(ACT) is based on potential evapotranspiration( $ET_0$ ). $ET_0$ can be calculated as equation below:
 
-$ET_0(t)=\alpha T(t)\quad T(t)\geqslant 0 \quad or \quad 0 \quad otherwise$
+$$
+ET_0(t)=\alpha T(t)\quad T(t)\geqslant 0 \quad or \quad 0 \quad otherwise
+$$
 
 And $AET$ can be calculated as equation below:
 
-$AET(t)=ET_0(t)*min(\frac{SM(t-1)}{FC*LP},1)$
+$$
+AET(t)=ET_0(t)*min(\frac{SM(t-1)}{FC*LP},1)
+$$
 
 $\alpha$ is a parameters of function of day air temperature, LC is the ratio determine fraction of FC.
 
@@ -82,21 +89,33 @@ $\alpha$ is a parameters of function of day air temperature, LC is the ratio det
 
 The calculation of SM is shown as equation below:
 
-$SM(t)=SM(t-1)+P(t)+S_m(t)-AET(t)-F(t)$
+$$
+SM(t)=SM(t-1)+P(t)+S_m(t)-AET(t)-F(t)
+$$
 
-Runoff is the sum of $Q_0$(discharge in near surface flow),$Q_1$(discharge in upper reservoir),$Q_2$(discharge in lower reservoir) and equation of them are below:
+Runoff is the sum of $Q_0$ (discharge in near surface flow), $Q_1$ (discharge in upper reservoir), $Q_2$ (discharge in lower reservoir) and equation of them are below:
 
-$Q_0(t)=k_0(SUZ(t-1)-L_{suz}) \quad or\quad 0 \quad otherwise$
+$$
+Q_0(t)=k_0(SUZ(t-1)-L_{suz}) \quad or\quad 0 \quad otherwise
+$$
 
-$Q_1(t)=k_1 SUZ(t-1)$
+$$
+Q_1(t)=k_1 SUZ(t-1)
+$$
 
-$Q_2(t)=k_2 SLZ(t-1)$
+$$
+Q_2(t)=k_2 SLZ(t-1)
+$$
 
-$k_0$,$k_1$ and $k_2$ are the coefficients in each level.  $L_{SUZ}$ is the threshold parameters of interflow.  Storage is the sum of SUZ(the amount of water stored in the upper reservoir) and LUZ(Groundwater in the lower reservoir) and the equation of them are below:
+$k_0$, $k_1$ and $k_2$ are the coefficients in each level.  $L_{SUZ}$ is the threshold parameters of interflow.  Storage is the sum of SUZ(the amount of water stored in the upper reservoir) and LUZ(Groundwater in the lower reservoir) and the equation of them are below:
 
-$SUZ(t)=SUZ(t-1)+F(t)-Q_0(t)-Q_1(t)-C_{perc}$
+$$
+SUZ(t)=SUZ(t-1)+F(t)-Q_0(t)-Q_1(t)-C_{perc}
+$$
 
-$SLZ(t)=SLZ(t-1)+C_{perc}-Q_2(t)$
+$$
+SLZ(t)=SLZ(t-1)+C_{perc}-Q_2(t)
+$$
 
 $C_{perc}$(mm/d) is the constant percolation rate at the upper reservoir.
 
@@ -104,7 +123,9 @@ $C_{perc}$(mm/d) is the constant percolation rate at the upper reservoir.
 
 To evaluate the performance of our model, we can use Nash–Sutcliffe model efficiency coefficient value. The NSE value can be calculated as:
 
-$NSE=1-\frac{\sum_{n = 1}^{N}  (Q_{observed}-Q_{prediction})^2}{\sum_{n = 1}^{N}  (Q_{observed}-\overline{Q_{observed}})^2 }$
+$$
+NSE=1-\frac{\sum_{n = 1}^{N}  (Q_{observed}-Q_{prediction})^2}{\sum_{n = 1}^{N}  (Q_{observed}-\overline{Q_{observed}})^2 }
+$$
 
 N means the number of data, and $Q_{observed}$ mean the discharge we got from dataset, and $Q_{prediction}$ mean the discharge calculated by model. The closer the value of NSE to 1 means the better performance of the model.
 
