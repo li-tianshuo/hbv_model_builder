@@ -412,10 +412,10 @@ Parameters file should be txt file or in the same format. It should have 19 line
 |   9 | k2                     |
 |  10 | Lsuz                   |
 |  11 | Cperc                  |
-|  12 | SD_i                   |
-|  13 | SUZ_i                  |
-|  14 | SLZ_i                  |
-|  15 | SM_i                   |
+|  12 | SD_i (initial value of SD) |
+|  13 | SUZ_i (initial value of SUZ) |
+|  14 | SLZ_i (initial value of SLZ)  |
+|  15 | SM_i (initial value of SM)   |
 |  16 | A(area/size)           |
 |  17 | column position of T   |
 |  18 | column position of P   |
