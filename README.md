@@ -406,7 +406,8 @@ Example file "parameters.txt" can be good example as a reference.
 Output of example is as following:
 
 ```text
-HBV model build successful!                                                                                                             Data file generated as result.csv
+HBV model build successful!                                                                                                             
+Data file generated as result.csv
 
 The NSE value is 0.875398
 
