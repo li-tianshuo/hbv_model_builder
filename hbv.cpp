@@ -188,10 +188,7 @@ void runHBV(std::string data_file, std::string parameters_file, std::string outp
  * @brief This function will print out help message to the console.
  */
 void print_help_message() {
-    std::cout << "---------------------------------------"
-        << "Documentation"
-        << "--------------------------------------"
-        <<"\n";
+    std::cout<< "   Documentation:" <<"\n";
     std::cout << "Usage: \nhbv data_file_path parameter_file_path output_path" << "\n";
     std::cout << "Options:" << "\n";
     std::cout << "  data_file_path:" << "\n";
@@ -202,9 +199,7 @@ void print_help_message() {
     std::cout << "A text file that contained all parameters and spilt by line break"<< "\n\n";
 
     std::cout << "The table below shows each line and parameters"<< "\n";
-    std::cout << "--------------------------------"<< "\n";
     std::cout << "|Line | Parameters             |"<< "\n";
-    std::cout << "--------------------------------"<< "\n";
     std::cout << "|   1 | T_tr                   |"<< "\n";
     std::cout << "|   2 | DF                     |"<< "\n";
     std::cout << "|   3 | FC                     |"<< "\n";
@@ -223,14 +218,13 @@ void print_help_message() {
     std::cout << "|  16 | A                      |"<< "\n";
     std::cout << "|  17 | column position of T   |"<< "\n";
     std::cout << "|  18 | column position of P   |"<< "\n";
-    std::cout << "|  19 | column position of Q   |"<< "\n";
-    std::cout << "--------------------------------"<< "\n\n";
+    std::cout << "|  19 | column position of Q   |"<< "\n\n";
     std::cout << "Usage: \nhbv [-h][--help][-e][--example]" << "\n";
     std::cout << "Options:" << "\n";
     std::cout << "  -h, --help:" << "\n";
     std::cout << "Print all documentation about this program" << "\n";
     std::cout << "  -e, --example:" << "\n";
-    std::cout << "Use example data to generate data file named \"result.csv\" and calculate NSE,\n"
+    std::cout << "Use example data to generate data file named \"result.csv\" and calculate NSE,"
         << "please make sure \"example_data.csv\" and \"parameters.txt\" \nis under the same path."
         << "\n";
 }
@@ -238,35 +232,23 @@ void print_help_message() {
  * @brief This function will print overview of program when user only type commend without argument.
  */
 void print_overview() {
-    std::cout << "\n---------------------------------------"
-        << "Introduction"
-        << "---------------------------------------"
-        <<"\n";
+    std::cout << "  Introduction" <<"\n";
     std::cout <<"This program will build a HBV model and "
-        <<"generate data file and calculate NSE based on given \ndataset."
+        <<"generate data file and calculate NSE based on given dataset."
         <<"\n\n";
-    std::cout << "---------------------------------------"
-        << "About HBV model"
-        << "------------------------------------"
-        <<"\n";
-    std::cout <<"HBV model is traditional hydrologic model to predict"
-        <<"area runoff/discharge based on most \nbasic elements "
+    std::cout << "  About HBV model" <<"\n";
+    std::cout <<"HBV model is traditional hydrologic model to predict "
+        <<"area runoff/discharge based on most basic elements "
         <<"such as precipitation and temperature"
         <<"\n\n";
-    std::cout << "---------------------------------------"
-        << "Quick Start/ Try a Example"
-        << "-------------------------"
-        <<"\n";
-    std::cout <<"This program included a example data file called \"example_data.csv\""
-        << "and parameters \n\"parameters.txt\", use commend below to try a quick example of this program:"
+    std::cout << "  Quick Start / Try a Example" << "\n";
+    std::cout <<"This program included a example data file called \"example_data.csv\" "
+        << "and parameters \"parameters.txt\", use commend below to try a quick example of this program:"
         << "\n\n";
     std::cout << "Usage: hbv -e" << "\n";
     std::cout << "Usage hbv --example" << "\n\n";
-    std::cout << "---------------------------------------"
-        << "Documentation"
-        << "--------------------------------------"
-        <<"\n";
-    std::cout <<"For more information about this program, the help commend"
+    std::cout << "  Documentation" <<"\n";
+    std::cout <<"For more information about this program, the help commend "
         << "is below:"
         << "\n\n";
     std::cout << "Usage: hbv -h" << "\n";

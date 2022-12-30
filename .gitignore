@@ -1,3 +1,4 @@
 .vscode/*
+result.csv
 *.o
 *.exe

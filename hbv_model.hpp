@@ -130,20 +130,20 @@ class hbv_model {
             std::cout<< "Please check the dataset and parameters or initialized the HBV model" <<"\n";
          } else {
             std::cout<< "The NSE value is " << NSE <<"\n\n";
-            std::cout<< "NSE is a value to evaluate performance of model."
-               <<"A value closer to 1 mean better performance \non the model just like R^2"
+            std::cout<< "NSE is a value to evaluate performance of model. "
+               <<"A value closer to 1 mean better performance on the model just like R^2."
                <<"\n\n";
             std::cout<< "  Suggestion: \n";
             if (NSE == 1) {
-               std::cout<< "The result seems prefect but please check if the dataset is over fitted\n";
+               std::cout<< "The result seems prefect but please check if the dataset is over fitted.\n";
             } else if (NSE< 1 && NSE >= 0.9) {
-               std::cout<< "The result seems prefect. But over fitted maybe a potential issue \n";
+               std::cout<< "The result seems prefect. But over fitted maybe a potential issue. \n";
             } else if (NSE< 0.9 && NSE >= 0.7) {
                std::cout<< "The result seems good. \n";
             } else if (NSE< 0.7 && NSE >= 0.4) {
                std::cout<< "The result seems acceptable. \n";
             } else if (NSE< 0.4) {
-               std::cout<< "The result seems not acceptable. Please choose other model or check dataset \n";
+               std::cout<< "The result seems not acceptable. Please choose other model or check dataset.\n";
             }
          }
       }
