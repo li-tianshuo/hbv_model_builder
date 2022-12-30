@@ -10,23 +10,19 @@
  * @brief hbv_model class will build HBV model with given dataset and parameters.
  * It included the function that can calculated predictions value and NSE, and provide 
  * function with return value.
- * 
  */
 class hbv_model {
  public:
       /**
        * @brief This vector are use to storing Q(runoff/discharge) from dataset.
-       * 
        */
       std::vector<double> Q;
       /**
        * @brief This vector are use to storing P(precipitation) from dataset.
-       * 
        */
       std::vector<double> P;
       /**
        * @brief This vector are use to storing T(daily mean temperature) from dataset.
-       * 
        */
       std::vector<double> T;
       /**
@@ -52,7 +48,6 @@ class hbv_model {
       std::vector<double> parameters;
       /**
        * @brief Construct a new hbv model model
-       * 
        * @param Qz discharge vector given bt dataset
        * @param P1 precipitation vector given by dataset
        * @param T1 daily mean temperature vector given by dataset
@@ -72,7 +67,6 @@ class hbv_model {
       }
       /**
        * @brief getNSE() will return NSE value from HBV model
-       * 
        * @return double NSE value
        */
       double getNSE() {
@@ -80,7 +74,6 @@ class hbv_model {
       }
       /**
        * @brief getRF() will return RF vector from HBV model
-       * 
        * @return std::vector<double>  RF
        */
       std::vector<double> getRF() {
@@ -88,7 +81,6 @@ class hbv_model {
       }
       /**
        * @brief getET() will return ET vector from HBV model
-       * 
        * @return std::vector<double> ET
        */
       std::vector<double> getET() {
@@ -96,14 +88,12 @@ class hbv_model {
       }
       /**
        * @brief getAET() will return AET vector from HBV model
-       * 
        */
       std::vector<double> getAET() {
          return AET;
       }
       /**
        * @brief getSLZ() will return SLZ vector from HBV model
-       * 
        * @return std::vector<double> SLZ
        */
       std::vector<double> getSLZ() {
@@ -111,7 +101,6 @@ class hbv_model {
       }
       /**
        * @brief getSUZ() will return SUZ vector from HBV model
-       * 
        * @return std::vector<double> SUZ
        */
       std::vector<double> getSUZ() {
@@ -119,7 +108,6 @@ class hbv_model {
       }
       /**
        * @brief getSQt() will return Qt vector from HBV model
-       * 
        * @return std::vector<double> Qt
        */
       std::vector<double> getQt() {
@@ -127,7 +115,6 @@ class hbv_model {
       }
       /**
        * @brief getQa() will return Q_a vector from HBV model
-       * 
        * @return std::vector<double> Q_a
        */
       std::vector<double> getQa() {
@@ -136,10 +123,9 @@ class hbv_model {
       /**
        * @brief getNSE_AD() will overview of NSE value and suggestion based on dataset,
        * and print those content to console.
-       * 
        */
       void getNSE_AD() {
-         if (NSE== -2) {
+         if (NSE == -2) {
             std::cout<< "The HBV model is not initialized or the value is not acceptable" <<"\n";
             std::cout<< "Please check the dataset and parameters or initialized the HBV model" <<"\n";
          } else {
@@ -167,102 +153,83 @@ class hbv_model {
        * @brief NSE mean Nash–Sutcliffe model efficiency coefficient value. It's a value to 
        * evaluate performance of the hydrologic model. The value of it usually between 
        * 0 and 1(may less than 0), when it closer to 1 mean a better performance.
-       * 
        */
       double NSE = -2;
       /**
        * @brief averageQ is the average of Q (runoff/discharge) value from dataset. It will use 
        * to calculate NSE value.
-       * 
        */
       double averageQ;
       /**
        * @brief those value are declare as parameters value for calculation. Detailed information
        * about each parameters can be found in Readme file.
-       * 
        */
       double T_tr, DF, FC, beta, alpha, LP, k0, k1, k2, Lsuz, Cperc, SD_i, SUZ_i, SLZ_i, SM_i, A;
        /**
        * @brief Q_a are used to store Q(run off/discharge) per day in that area from HBV model.
-       * 
        */
       std::vector<double> Q_a;
       /**
        * @brief S_m are used to store snowmelt rate per day from HBV model.
-       * 
        */
       std::vector<double> S_m;
       /**
        * @brief SD are used to store SnowDepth per day based on precipitation and temperature.
-       * 
        */
       std::vector<double> SD;
       /**
        * @brief SLZ are used to store amount of groundwater in the lower reservoir per day from calculation.
-       * 
        */
       std::vector<double> SLZ;
       /**
        * @brief SM are used to store actual soil moisture per day from calculation.
-       * 
        */
       std::vector<double> SM;
       /**
        * @brief ASM are used to store actual snow melt per day from calculation.
-       * 
        */
       std::vector<double> ASM;
       /**
        * @brief RF are used to store effective rainfall per day from calculation.
-       * 
        */
       std::vector<double> RF;
       /**
        * @brief ET are used to store potential evapotranspiration per day from calculation.
-       * 
        */
       std::vector<double> ET;
       /**
        * @brief AET are used to store actual evapotranspiration per day from calculation.
-       * 
        */
       std::vector<double> AET;
       /**
        * @brief F are used to store water flex per day from calculation.
-       * 
        */
       std::vector<double> F;
       /**
        * @brief SUZ are used to store amount of groundwater in the upper reservoir per day from calculation.
-       * 
        */
       std::vector<double> SUZ;
       /**
        * @brief Q0 are used to store amount of surface flow response per day.
-       * 
        */
       std::vector<double> Q0;
       /**
        * @brief Q1 are used to store amount of interflow response per day.
-       * 
        */
       std::vector<double> Q1;
       /**
        * @brief Q2 are used to store amount of base flow response per day.
-       * 
        */
       std::vector<double> Q2;
       /**
        * @brief Qt are total amount of flow(runoff/discharge).
-       * 
        */
       std::vector<double> Qt;
       /**
        * @brief Get the Average value of Q(run off/discharge).
-       * variable a is used to store total value of Q.
        */
       void getAverageQ() {
-         double a = 0;
+         double a = 0;  // used to store total value of Q.
          for (size_t i = 1; i < Q.size(); i++) {
             a += Q[i];
          }
@@ -271,14 +238,13 @@ class hbv_model {
       /**
        * @brief Start to do calculation of HBV model.
        * For detailed information about HBV equation, please check readme file.
-       * variable SG as snow gain in calculation.
-       * variable temp1 is to store the part 1 value of NSE value.
-       * variable temp2 is to store the part 2 value of NSE value.(Detail information can be found in readme file)
        */
       void getResult() {
-         double SG = 0;
+         double SG = 0;   // SG as snow gain in calculation.
          double temp1 = 0;
+         // temp1 is to store the part 1 value of NSE value.
          double temp2 = 0;
+         // temp2 is to store the part 2 value of NSE value.(Detail information can be found in readme file)
          SD.push_back(SD_i);
          SLZ.push_back(SLZ_i);
          SUZ.push_back(SUZ_i);
@@ -303,7 +269,7 @@ class hbv_model {
                RF.push_back(P[i]);
             }
             if (i+1 < Q.size()) {
-               SD.push_back(SD[i] + SG -ASM[i]);
+               SD.push_back(SD[i] + SG - ASM[i]);
             }
             if (T[i] >= 0) {
                ET.push_back(alpha * T[i]);
@@ -311,25 +277,25 @@ class hbv_model {
                ET.push_back(0);
             }
             if (i > 0) {
-               AET.push_back(ET[i]* std::min(((SM[i-1])/(FC*LP)), 1.0));
-               F.push_back((pow(SM[i-1]/FC, beta)) * (RF[i]+ASM[i]));
+               AET.push_back(ET[i]* std::min(((SM[i-1]) / (FC*LP)), 1.0));
+               F.push_back((pow(SM[i-1] / FC, beta)) * (RF[i] + ASM[i]));
                SM.push_back(SM[i-1] + RF[i] + ASM[i] - AET[i-1] - F[i-1]);
                if (SUZ[i-1] > Lsuz) {
-                  Q0.push_back(k0*(SUZ[i-1]-Lsuz));
+                  Q0.push_back(k0*(SUZ[i-1] - Lsuz));
                } else {
                   Q0.push_back(0);
                }
                Q1.push_back(k1*SUZ[i-1]);
-               Q2.push_back(std::max(k2*SLZ[i-1], 0.0));
-               Qt.push_back(Q0[i-1]+Q1[i-1]+Q2[i-1]);
+               Q2.push_back(std::max(k2 * SLZ[i-1], 0.0));
+               Qt.push_back(Q0[i-1]+Q1[i-1] + Q2[i-1]);
                Q_a.push_back((Qt[i-1]*0.001) * A);
-               SUZ.push_back(std::max((SUZ[i-1]+F[i-1]-Q0[i-1]-Q1[i-1]-Cperc), 0.0));
-               SLZ.push_back(SLZ[i-1]+std::min(Cperc, SUZ[i-1])-Q2[i-1]);
-               temp1 += pow(Q[i]-Qt[i-1], 2);
-               temp2 += pow(Q[i]-averageQ, 2);
+               SUZ.push_back(std::max((SUZ[i-1] + F[i-1] - Q0[i-1] - Q1[i-1] - Cperc), 0.0));
+               SLZ.push_back(SLZ[i-1] + std::min(Cperc, SUZ[i-1]) - Q2[i-1]);
+               temp1 += pow(Q[i] - Qt[i-1], 2);
+               temp2 += pow(Q[i] - averageQ, 2);
             }
          }
-         NSE = 1- temp1/temp2;
+         NSE = 1- temp1 / temp2;
       }
       /**
        * @brief Set the parameter based on given vector and check the range of each parameters.
@@ -412,7 +378,6 @@ class hbv_model {
       }
       /**
        * @brief This function will check value in the range.
-       * 
        * @param value value want to check
        * @param low lower bound of parameters
        * @param high higher bound of parameters

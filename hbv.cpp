@@ -9,26 +9,16 @@
 #include "hbv_model.hpp"
 /**
  * @brief This function will run HBV model based on given file path.
- * variable t is a indicator to record the lines of file.
- * variable z is a indicator to record the columns of data file
- * variable p_Q, p_P, p_T is getting from parameter file and store the column numbers of Q, P, T
- * variable temp and temp1 are used to get string from file
- * variable temp2 are used to store stringstream based on each lien string value from data file
- * variable temp3 are used to store the value convert from string to double
- * variable parameters are used to store the parameters information
- * variable Q,T,P are used to store Q,T,P information from data file.
- * variable o_variable are used to get the value from the hbv model and use them to generate the result.csv file.
- * This function will read csv file from line2(since there some header exist), and it can detect missing value
- * or non-double value in the data file and skiped to next records.
- * 
+ * It will read csv file from line2(since there some header exist), 
+ * and can detect missing value or non-double value in the data file and skiped to next records.
  * @param data_file The path of data file(csv file or same format)
  * @param parameters_file The path of parameter file (txt or similar format)
  * @param output_path output path
  */
 void runHBV(std::string data_file, std::string parameters_file, std::string output_path) {
-    std::ifstream input1(data_file);
-    std::ifstream input2(parameters_file);
-    std::ofstream output(output_path);
+    std::ifstream input1(data_file);  // declare ifstream to process data file
+    std::ifstream input2(parameters_file);  // declare ifstream to process parameters file
+    std::ofstream output(output_path);   // declare ofstream to process output file
     if (!input1.is_open()) {
         std::cerr << "Can't Open " << data_file <<"\n";
         exit(-1);
@@ -41,18 +31,18 @@ void runHBV(std::string data_file, std::string parameters_file, std::string outp
         std::cerr << "Can't Open " << output_path <<"\n";
         exit(-1);
     }
-    int64_t t = 0;
-    int8_t z = 0;
-    int8_t p_Q = -1;
-    int8_t p_T = -1;
-    int8_t p_P = -1;
-    std::string temp;
-    std::string temp1;
-    std::vector<double> parameters;
-    std::vector<double> Q;
-    std::vector<double> T;
-    std::vector<double> P;
-    double temp3;
+    int64_t t = 0;  // t is a indicator to record the lines of file.
+    int8_t z = 0;  // z is a indicator to record the columns of data file
+    int8_t p_Q = -1;  // p_Q is getting from parameter file and store the column numbers of Q
+    int8_t p_T = -1;  // p_T is getting from parameter file and store the column numbers of T
+    int8_t p_P = -1;  // p_P is getting from parameter file and store the column numbers of P
+    std::string temp;  // temp is used to get string from file as one sentence
+    std::string temp1;  // temp1 are used to get string from file as one cell
+    std::vector<double> parameters;  // parameters are used to store the parameters information
+    std::vector<double> Q;  // Q are used to store Q information from data file.
+    std::vector<double> T;  // T are used to store T information from data file.
+    std::vector<double> P;  // P are used to store P information from data file.
+    double temp3;  // temp3 are used to store the value convert from string to double
     while (std::getline(input2, temp)) {
         if (t <= 15) {
             try {
@@ -91,6 +81,7 @@ void runHBV(std::string data_file, std::string parameters_file, std::string outp
     t = 0;
     while (std::getline(input1, temp)) {
         std::istringstream temp2(temp);
+        // temp2 are used to store stringstream based on each lien string value from data file
         z = 0;
         try {
             while (std::getline(temp2, temp1, ',')) {
@@ -133,6 +124,7 @@ void runHBV(std::string data_file, std::string parameters_file, std::string outp
             std::cerr << e.what() << '\n';
             std::cerr << "This record will skip but complete will continue" << '\n';
             size_t pos_min = std::min(std::min(Q.size(), P.size()), T.size());
+            // pos_min use to locate the line with error and pop_up other variable to skip this line.
             if (T.size() != pos_min) {
                 T.pop_back();
             }
@@ -155,11 +147,17 @@ void runHBV(std::string data_file, std::string parameters_file, std::string outp
     hbv_model hbv_model(Q, P, T, parameters);
     std::cout << "HBV model build successful!" <<"\n";
     std::vector<double> o_RF = hbv_model.getRF();
+    // o_RF are used to get the value of RF from the hbv model and use them to generate the result.csv file.
     std::vector<double> o_AET = hbv_model.getAET();
+    // o_AET are used to get the value of AET from the hbv model and use them to generate the result.csv file.
     std::vector<double> o_ET = hbv_model.getET();
+    // o_ET are used to get the value of ET from the hbv model and use them to generate the result.csv file.
     std::vector<double> o_storage;
+    // o_storage are used to store sum of SUZ and SLZ, and use them to generate the result.csv file.
     std::vector<double> o_Qt = hbv_model.getQt();
+    // o_Qt are used to get the value of Qt from the hbv model and use them to generate the result.csv file.
     std::vector<double> o_Qa = hbv_model.getQa();
+    // o_Qa are used to get the value of Q_a from the hbv model and use them to generate the result.csv file.
     for (size_t i = 0; i < o_RF.size(); i++) {
         o_storage.push_back(hbv_model.getSLZ()[i]+hbv_model.getSUZ()[i]);
     }
@@ -188,7 +186,6 @@ void runHBV(std::string data_file, std::string parameters_file, std::string outp
 }
 /**
  * @brief This function will print out help message to the console.
- * 
  */
 void print_help_message() {
     std::cout << "---------------------------------------"
@@ -239,7 +236,6 @@ void print_help_message() {
 }
 /**
  * @brief This function will print overview of program when user only type commend without argument.
- * 
  */
 void print_overview() {
     std::cout << "\n---------------------------------------"
@@ -279,7 +275,6 @@ void print_overview() {
 /**
  * @brief The main function will get input from user and provide some argument such as "help" and "example" 
  * or build HBV model with given file path.
- * 
  */
 int main(int argc, char *argv[]) {
     std::string help1 = "--help";
