@@ -38,30 +38,29 @@
 
 ### Overview
 
-HBV model is a traditional hydrologic model to predict area runoff/discharge based on most basic elements
-which developed in 1972. It still used in some areas currently as a tool that convert meteorological observation
-to discharge[^1]. And this is a simplified implementation by C++ based on content of McMaster University CIVENG 6M03 class's lab. This program can build HBV model easily with given dataset and parameters, then generate the data file with NSE value.
+HBV model is a traditional hydrologic model developed in 1972 to predict area runoff/discharge based on most basic elements. It is still currently used in some areas as a tool that convert meteorological observation
+into discharge[^1]. And this is a simplified implementation by C++ based on the content of McMaster University CIVENG 6M03 class's lab. This program can build HBV model easily with given dataset and parameters, then generate the data file with NSE value.
 
 ### Implementation
 
-There are 5 part in building a hbv model. The flow chart of core component of implementing HBV model as shown in figure below:
+There are 5 parts in building an HBV model. The flow chart of core components of implementing HBV model is shown in figure below:
 
 ![logic](logic.png)
 
 #### Snowmelt and Accumulation
 
-The snow melt and accumulation is rely on the threshold temperature in that area. And the equation for calculate the snowmelt rate( $mm/day$ ) is shown in equation below:
+The snowmelt and accumulation of snow are relied on the threshold temperature in that area. And the equation for calculating the snowmelt rate( $mm/day$ ) is shown in the equation below:
 
 $$
 S_m(t)=DDF(T(t)-T_tr)
 $$
 
-DDF is the degree-day factor( $mm/(^\circ C*day)$ ) and t is daily mean temperature.
+DDF is the degree-day factor( $mm/(^\circ C*day)$ ) and T is daily mean temperature.
 
 #### Effective Precipitation
 
-With the snow melt rate, we can determine the effective precipitation. The precipitation can be rain or snow, and we can use threshold temperature to determine the snow or rain. If that's snow, use snowmelt rate to determine actual snow rate. If not, we can determine effective precipitation.
-The equation of water flux(F) to ground water is shown as equation below:
+With the snowmelt rate, we can determine the effective precipitation. The precipitation can be rain or snow, and we can use threshold temperature to determine the snow or rain. If that's snow, we can use snowmelt rate to determine actual snow rate. If not, we can determine the effective precipitation.
+The equation of water flux(F) to ground water is shown as the equation below:
 
 $$
 F(t)=\frac{SM(t-1)}{FC}^\beta (P(t)+ASM(t))
@@ -71,29 +70,29 @@ $$
 
 #### Evapotranspiration
 
-Actual Evapotranspiration(ACT) is based on potential evapotranspiration( $ET_0$ ). $ET_0$ can be calculated as equation below:
+Actual Evapotranspiration(ACT) is based on potential evapotranspiration( $ET_0$ ). $ET_0$ can be calculated as the equation below:
 
 $$
 ET_0(t)=\alpha T(t)\quad T(t)\geqslant 0 \quad or \quad 0 \quad otherwise
 $$
 
-And $AET$ can be calculated as equation below:
+And $AET$ can be calculated as the equation below:
 
 $$
 AET(t)=ET_0(t)*min(\frac{SM(t-1)}{FC*LP},1)
 $$
 
-$\alpha$ is a parameters of function of day air temperature, LC is the ratio determine fraction of FC.
+$\alpha$ is a parameters of function of day air temperature, LC is the ratio that determine fraction of FC.
 
 #### Storage and Runoff
 
-The calculation of SM is shown as equation below:
+The calculation of SM is shown as the equation below:
 
 $$
 SM(t)=SM(t-1)+P(t)+S_m(t)-AET(t)-F(t)
 $$
 
-Runoff is the sum of $Q_0$ (discharge in near surface flow), $Q_1$ (discharge in upper reservoir), $Q_2$ (discharge in lower reservoir) and equation of them are below:
+Runoff is the sum of $Q_0$ (discharge in near surface flow), $Q_1$ (discharge in upper reservoir), $Q_2$ (discharge in lower reservoir) and the equation of them are below:
 
 $$
 Q_0(t)=k_0(SUZ(t-1)-L_{suz}) \quad or\quad 0 \quad otherwise
@@ -107,7 +106,7 @@ $$
 Q_2(t)=k_2 SLZ(t-1)
 $$
 
-$k_0$, $k_1$ and $k_2$ are the coefficients in each level.  $L_{SUZ}$ is the threshold parameters of interflow.  Storage is the sum of SUZ(the amount of water stored in the upper reservoir) and LUZ(Groundwater in the lower reservoir) and the equation of them are below:
+$k_0$, $k_1$ and $k_2$ are the coefficients in each level.  $L_{SUZ}$ is the threshold parameters of interflow.  Storage is the sum of SUZ(the amount of water stored in the upper reservoir) and LUZ(Groundwater in the lower reservoir) and the equations of them are below:
 
 $$
 SUZ(t)=SUZ(t-1)+F(t)-Q_0(t)-Q_1(t)-C_{perc}
@@ -127,11 +126,11 @@ $$
 NSE=1-\frac{\sum_{n = 1}^{N}  (Q_{observed}-Q_{prediction})^2}{\sum_{n = 1}^{N}  (Q_{observed}-\overline{Q_{observed}})^2 }
 $$
 
-N means the number of data, and $Q_{observed}$ mean the discharge we got from dataset, and $Q_{prediction}$ mean the discharge calculated by model. The closer the value of NSE to 1 means the better performance of the model.
+N means the number of data, and $Q_{observed}$ means the discharge we got from the dataset, and $Q_{prediction}$ means the discharge calculated by model. The closer the value of NSE to 1 means the better performance of the model.
 
 ## Getting Start
 
-This program is developed and tested on x64 windows device with C++20 and it should compile on any device with C++20. In order to start the program, please download the whole program folder.
+This program is developed and tested on the x64 windows device with C++20 and it should compile on any device with C++20. In order to start the program, please download the whole program folder.
 
 ### Program
 
@@ -149,7 +148,7 @@ or
 hbv
 ```
 
-This command will return overview information of this program included quick start and command.
+This command will return overview information of this program including quick start and command.
 
 #### Documentation
 
@@ -167,7 +166,7 @@ hbv --help
 
 ##### Run with Example Data
 
-The program folder also with example data called "example_data.csv" and parameters example file called "parameters.txt". To run example of this program, you could do like this:
+The program folder also contains the example data called "example_data.csv" and the parameters example file called "parameters.txt". To run example of this program, you could do as what's shown below:
 
 ```text
 hbv -e
@@ -183,14 +182,14 @@ It will output NSE value and output "result.csv" under the program folder.
 
 #### Start Your Own HBV model
 
-To start your own hbv model, you need to prepare data file like "example_data.csv" and parameters file like "parameters.txt". Details information about those two file can be found in next section. Please run commend like this:
+To start your own hbv model, you need to prepare a data file like "example_data.csv" and a parameters file like "parameters.txt". Detailed information about those two file can be found in next section. Please run commend like this:
 
 ```text
 hbv "data file path" "parameters file path" "output path"
 ```
 
-"data file path" is where your data file located and "parameters file path" is where your parameters file located. "output path" is the final result file output path.
-Here is a example to build HBV model:
+"data file path" is where your data file is located and "parameters file path" is where your parameters file is located. "output path" is the final result file output path.
+Here is an example to build a HBV model:
 
 ```text
 hbv example_data.csv parameters.txt result.csv
@@ -224,7 +223,7 @@ To build hbv model, you could call:
 runHBV(data_file, parameters_file, output_path)
 ```
 
-Data_file, parameters_file, output_path are all string and they store the path of data file, parameters file and output file. This method can handle normal IO exception and contained missing value and non-double value detection for data file. And it could handle if exist unexpected input from parameters file.
+Data_file, parameters_file, output_path are all strings and they store the path of the data file, parameters file and output file. This method can handle normal IO exception and contain missing values as well as non-double values detection for the data file. And it could handle if exist unexpected input from the parameters file.
 
 ### hbv_model.hpp
 
@@ -240,13 +239,13 @@ To included hbv_model.hpp to your program:
 
 #### Constructor
 
-The library included one constructor that can build hbv model and call all the function for calculations as shown below:
+The library included one constructor that can build the HBV model and call all the function for calculations as shown below:
 
 ```c++
 hbv_model hbv_model(Q, P, T, parameters);
 ```
 
-Q, P, T and parameters are all double vectors. Q is the observe discharge/run off for each day. P is the precipitation for each day and T is daily mean temperature each day. Parameters are the vector that included all the parameters. Q, T, P should have same size and parameters should follow the order below:
+Q, P, T, and parameters are all double vectors. Q is the observe discharge/run off for each day. P is the precipitation for each day and T is daily mean temperature each day. Parameters are the vector that included all the parameters. Q, P, T should have same size and parameters should follow the order below:
 
 ```c++
 T_tr = parameters[0];
@@ -267,11 +266,11 @@ SM_i = parameters[14];
 A = parameters[15];
 ```
 
-The constructor will do all the calculation after setting the value.
+The constructor will perform all the calculation after setting up the value.
 
 #### Getting Result of HBV model
 
-This library provide multiple methods to get result of HBV model.
+This library provides multiple methods to get the result of the HBV model.
 
 To get NSE value, you can just do like this:
 
@@ -279,45 +278,43 @@ To get NSE value, you can just do like this:
 hbv_model.getNSE();
 ```
 
-To get vector contained effective rainfall(RF) information for each day, you can do:
+To get the vector that contained effective rainfall(RF) information for each day, you can do:
 
 ```c++
 hbv_model.getRF();
 ```
 
-To get vector contained potential evapotranspiration (ET)information for each day, you can do:
+To get the vector that contained potential evapotranspiration (ET)information for each day, you can do:
 
 ```c++
 hbv_model.getET();
 ```
 
-To get vector contained actual evapotranspiration (AET) information for each day, you can do:
+To get the vector that contained actual evapotranspiration (AET) information for each day, you can do:
 
 ```c++
 hbv_model.getAET();
 ```
 
-To get vector contained the amount of water stored in
-the upper reservoir(SUZ) information for each day, you can do:
+To get the vector that contained the amount of water stored in the upper reservoir(SUZ) information for each day, you can do:
 
 ```c++
 hbv_model.getSUZ();
 ```
 
-To get vector contained the amount of water stored in
-the lower reservoir information for each day, you can do:
+To get the vector that contained the amount of water stored in the lower reservoir information for each day, you can do:
 
 ```c++
 hbv_model.getSLZ();
 ```
 
-To get vector contained the discharge for each day, you can do:
+To get the vector that contained the discharge for each day, you can do:
 
 ```c++
 hbv_model.getQt();
 ```
 
-To get vector contained the discharge in that area for each day, you can do:
+To get the vector that contained the discharge in that area for each day, you can do:
 
 ```c++
 hbv_model.getQa();
@@ -325,7 +322,7 @@ hbv_model.getQa();
 
 #### Get Suggestion Based on NSE
 
-Since NSE is important value evaluate performance of HBV model. You could get some suggestion by calling method:
+Since NSE is an important value evaluate performance of HBV model. You could get some suggestion by calling method:
 
 ```c++
 hbv_model.getNSE_AD();
@@ -333,7 +330,7 @@ hbv_model.getNSE_AD();
 
 #### Calculate Average value of Observe Q (Private Function)
 
-This library provided a function that can calculate average value of observe Q. If you want to re-use it, just simply called like this in the library:
+This library provides a function that can calculate average value of observe Q. If you want to re-use it, just simply do as this in the library:
 
 ```c++
 getAverageQ();
@@ -341,7 +338,7 @@ getAverageQ();
 
 #### Set Parameters (Private Function)
 
-This library provided a function that can set parameters by given vector. If you want to develop more functions by re-using this method, please called function like this:
+This library provided a function that can set parameters by given vector. If you want to develop more functions by re-using this method, please perform the function as below:
 
 ```c++
 setParameter();
@@ -349,7 +346,7 @@ setParameter();
 
 #### Check Range of Parameters(Private Function)
 
-This library provided a function that check the range of each parameters. The range of each parameter is followed by the table:
+This library provided a function that check the range of each parameter. The range of each parameter is followed by the table:
 |No|Parameters|Lower bound| Upper bound
 | ----------- | ----------- | ----------- | ----------- |
 |   1 | T_tr | -1.5 | 2.5 |
@@ -364,7 +361,7 @@ This library provided a function that check the range of each parameters. The ra
 |  10 | Lsuz| 1| 100|
 |  11 | Cperc | 0.01 |6|
 
-The function will check if the value is in range. If not it will set the value to lower bound. If you want to call them in the library, just like:
+The function will check if the value is in range. If not it will set the value to the lower bound value. If you want to call them in the library, just like:
 
 ```c++
 checkRange();
@@ -382,7 +379,7 @@ inRange(value, low, high);
 
 #### Calculate HBV model (Private Function)
 
-This library provided a function that do run HBV model based on the given data. If you want to re-use it, just called like this in the library:
+This library provided a function that do run the HBV model based on the given data. If you want to re-use it, just called like this in the library:
 
 ```c++
 getResult();
@@ -390,15 +387,15 @@ getResult();
 
 ## Input File
 
-The program usually required two file as input file: data file and parameters file.
+The program usually required two file as input file: the data file and the parameters file.
 
 ### Data File
 
-Data file should be csv file or in the same format. It should have at least 3 columns that stores data on temperature, precipitation, discharge. It could have a header or the data start at line 2. And It should have more than two units(times) records for calculations. Example file "example_data.csv" can be good example as a reference.
+The data file should be CSV file or in the same format. It should have at least 3 columns that stores data on temperature, precipitation, and discharge. It could have a header or the data start at line 2. And It should have more than two units(times) records for calculations. Example file "example_data.csv" can be a good example as a reference.
 
 ### Parameter File
 
-Parameters file should be txt file or in the same format. It should have 19 lines and each line only included one value. Each parameter can be set as shown below:
+The parameters file should be txt file or in the same format. It should have 19 lines and each line only include one value. Each parameter can be set as shown below:
 |Line No.|Parameters|
 | ----------- | ----------- |
 |   1 | T_tr                   |
@@ -421,11 +418,11 @@ Parameters file should be txt file or in the same format. It should have 19 line
 |  18 | column position of P   |
 |  19 | column position of Q   |
 
-Example file "parameters.txt" can be good example as a reference.
+Example file "parameters.txt" can be a good example as a reference.
 
 ## Example Output
 
-Output of example is as following:
+The output of the example is shown as follows:
 
 ```text
 HBV model build successful!                                                                                                             
