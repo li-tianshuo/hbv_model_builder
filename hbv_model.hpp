@@ -125,6 +125,7 @@ class hbv_model {
        * and print those content to console.
        */
       void getNSE_AD() {
+         std::cout.precision(3);
          if (NSE == -2) {
             std::cout<< "The HBV model is not initialized or the value is not acceptable" <<"\n";
             std::cout<< "Please check the dataset and parameters or initialized the HBV model" <<"\n";
@@ -230,7 +231,7 @@ class hbv_model {
        */
       void getAverageQ() {
          double a = 0;  // used to store total value of Q.
-         for (size_t i = 1; i < Q.size(); i++) {
+         for (uint64_t i = 1; i < Q.size(); i++) {
             a += Q[i];
          }
          averageQ = a/static_cast<double>(Q.size());
@@ -249,7 +250,7 @@ class hbv_model {
          SLZ.push_back(SLZ_i);
          SUZ.push_back(SUZ_i);
          SM.push_back(SM_i);
-         for (size_t i = 0; i < Q.size(); i++) {
+         for (uint64_t i = 0; i < Q.size(); i++) {
             SG = 0;
             if (T[i] > T_tr) {
                S_m.push_back(DF * (T[i] - T_tr));

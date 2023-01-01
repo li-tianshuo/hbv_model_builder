@@ -438,5 +438,6 @@ The result seems good.
 ```
 
 It also generated a "report.csv" file.
+**Note: The value of NSE and data in generated file will keep 3 digits after decimal point**
 
 [^1]: SMHI. 2011. HBV-modellen 1972 | SMHI. <https://www.smhi.se/kunskapsbanken/hydrologi/historisk-aterblick/hbv-modellen-1.17857>

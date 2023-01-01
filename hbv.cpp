@@ -1,5 +1,6 @@
 // Copyright 2022 Tianshuo Li
 #include <iostream>
+#include <iomanip>
 #include <algorithm>
 #include <vector>
 #include <string>
@@ -32,10 +33,10 @@ void runHBV(std::string data_file, std::string parameters_file, std::string outp
         exit(-1);
     }
     int64_t t = 0;  // t is a indicator to record the lines of file.
-    int8_t z = 0;  // z is a indicator to record the columns of data file
-    int8_t p_Q = -1;  // p_Q is getting from parameter file and store the column numbers of Q
-    int8_t p_T = -1;  // p_T is getting from parameter file and store the column numbers of T
-    int8_t p_P = -1;  // p_P is getting from parameter file and store the column numbers of P
+    int64_t z = 0;  // z is a indicator to record the columns of data file
+    int64_t p_Q = -1;  // p_Q is getting from parameter file and store the column numbers of Q
+    int64_t p_T = -1;  // p_T is getting from parameter file and store the column numbers of T
+    int64_t p_P = -1;  // p_P is getting from parameter file and store the column numbers of P
     std::string temp;  // temp is used to get string from file as one sentence
     std::string temp1;  // temp1 are used to get string from file as one cell
     std::vector<double> parameters;  // parameters are used to store the parameters information
@@ -54,11 +55,11 @@ void runHBV(std::string data_file, std::string parameters_file, std::string outp
         } else {
             try {
                 if (t == 16) {
-                    p_T = static_cast<int8_t>(std::stoi(temp));
+                    p_T = static_cast<int64_t>(std::stoi(temp));
                 } else if (t == 17) {
-                    p_P = static_cast<int8_t>(std::stoi(temp));
+                    p_P = static_cast<int64_t>(std::stoi(temp));
                 } else if (t == 18) {
-                    p_Q = static_cast<int8_t>(std::stoi(temp));
+                    p_Q = static_cast<int64_t>(std::stoi(temp));
                 }
             } catch(const std::exception& e) {
                 std::cerr << "Parameters contained non-integer value" << '\n';
@@ -103,7 +104,7 @@ void runHBV(std::string data_file, std::string parameters_file, std::string outp
                 std::cerr << "Data value contained non-double value" << '\n';
                 std::cerr << "This record will skip but complete will continue" << '\n';
                 std::cerr << e.what() << '\n';
-                size_t pos_min = std::min(std::min(Q.size(), P.size()), T.size());
+                uint64_t pos_min = std::min(std::min(Q.size(), P.size()), T.size());
                 if (T.size() != pos_min) {
                     T.pop_back();
                 }
@@ -123,7 +124,7 @@ void runHBV(std::string data_file, std::string parameters_file, std::string outp
         } catch (const std::domain_error& e) {
             std::cerr << e.what() << '\n';
             std::cerr << "This record will skip but complete will continue" << '\n';
-            size_t pos_min = std::min(std::min(Q.size(), P.size()), T.size());
+            uint64_t pos_min = std::min(std::min(Q.size(), P.size()), T.size());
             // pos_min use to locate the line with error and pop_up other variable to skip this line.
             if (T.size() != pos_min) {
                 T.pop_back();
@@ -143,6 +144,10 @@ void runHBV(std::string data_file, std::string parameters_file, std::string outp
         }
         t++;
     }
+    if (Q.size() < 2) {
+        std::cerr << "The data file should contain at leasts 2-day records" << '\n';
+        exit(-1);
+    }
     input1.close();
     hbv_model hbv_model(Q, P, T, parameters);
     std::cout << "HBV model build successful!" <<"\n";
@@ -158,7 +163,7 @@ void runHBV(std::string data_file, std::string parameters_file, std::string outp
     // o_Qt are used to get the value of Qt from the hbv model and use them to generate the result.csv file.
     std::vector<double> o_Qa = hbv_model.getQa();
     // o_Qa are used to get the value of Q_a from the hbv model and use them to generate the result.csv file.
-    for (size_t i = 0; i < o_RF.size(); i++) {
+    for (uint64_t i = 0; i < o_RF.size(); i++) {
         o_storage.push_back(hbv_model.getSLZ()[i]+hbv_model.getSUZ()[i]);
     }
     o_Qt.insert(o_Qt.begin(), std::nan(""));
@@ -171,14 +176,15 @@ void runHBV(std::string data_file, std::string parameters_file, std::string outp
     << "Storage (mm),"
     << "Runoff (mm/day),"
     << "Runoff in Area (m^3/day)\n";
-    for (size_t i = 0; i < o_RF.size(); i++) {
+    output << std::setprecision(3) << std::fixed;
+    for (uint64_t i = 0; i < o_RF.size(); i++) {
         output << std::to_string(i+1) << ","
-            << std::to_string(o_RF[i]) << ","
-            << std::to_string(o_ET[i]) << ","
-            << std::to_string(o_AET[i]) << ","
-            << std::to_string(o_storage[i]) << ","
-            << std::to_string(o_Qt[i])<< ","
-            << std::to_string(o_Qa[i])<< "\n";
+            << o_RF[i] << ","
+            << o_ET[i] << ","
+            << o_AET[i] << ","
+            << o_storage[i] << ","
+            << o_Qt[i]<< ","
+            << o_Qa[i]<< "\n";
     }
     output.close();
     std::cout <<"Data file generated as "<< output_path <<"\n\n";
@@ -229,7 +235,7 @@ void print_help_message() {
         << "\n";
 }
 /**
- * @brief This function will print overview of program when user only type commend without argument.
+ * @brief This function will print overview of program when user only type command without argument.
  */
 void print_overview() {
     std::cout << "  Introduction" <<"\n";
@@ -243,12 +249,12 @@ void print_overview() {
         <<"\n\n";
     std::cout << "  Quick Start / Try a Example" << "\n";
     std::cout <<"This program included a example data file called \"example_data.csv\" "
-        << "and parameters \"parameters.txt\", use commend below to try a quick example of this program:"
+        << "and parameters \"parameters.txt\", use command below to try a quick example of this program:"
         << "\n\n";
     std::cout << "Usage: hbv -e" << "\n";
     std::cout << "Usage hbv --example" << "\n\n";
     std::cout << "  Documentation" <<"\n";
-    std::cout <<"For more information about this program, the help commend "
+    std::cout <<"For more information about this program, the help command "
         << "is below:"
         << "\n\n";
     std::cout << "Usage: hbv -h" << "\n";
@@ -268,13 +274,13 @@ int main(int argc, char *argv[]) {
        // Print Overview of Program
        print_overview();
     } else if (argc == 2) {
-        // Print Simple commend of Program
+        // Print Simple command of Program
         if (argv[1] == help1 || argv[1] == help2) {
             print_help_message();
         } else if (argv[1] == example1 || argv[1] == example2) {
             runHBV("example_data.csv", "parameters.txt", "result.csv");
         } else {
-            std::cout <<"No commend found! Please use --help for more information" <<"\n";
+            std::cout <<"No command found! Please use --help for more information" <<"\n";
             std::cout << "Usage: hbv --help" << "\n";
         }
     } else {
