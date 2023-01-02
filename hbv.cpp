@@ -231,7 +231,7 @@ void print_help_message() {
     std::cout << "Print all documentation about this program" << "\n";
     std::cout << "  -e, --example:" << "\n";
     std::cout << "Use example data to generate data file named \"result.csv\" and calculate NSE,"
-        << "please make sure \"example_data.csv\" and \"parameters.txt\" \nis under the same path."
+        << "please make sure \"example_data.csv\" and \"parameters.txt\" is under the same path."
         << "\n";
 }
 /**
